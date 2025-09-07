@@ -1,1 +1,432 @@
-# movimento-revolution
+<!DOCTYPE html>
+<html lang="pt-pt" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movimento Cultural "Revolution"</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F2;
+            color: #2c2c2c;
+        }
+        .hero-bg {
+            background-color: #1a1a1a;
+            color: #F8F7F2;
+        }
+        .accent-red {
+            color: #E53E3E;
+        }
+        .bg-accent-red {
+            background-color: #E53E3E;
+        }
+        .border-accent-red {
+            border-color: #E53E3E;
+        }
+        .nav-link {
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #E53E3E;
+        }
+        .value-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .value-card.is-active {
+            border-width: 2px;
+            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.4);
+        }
+        .value-description {
+            display: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            opacity: 0;
+        }
+        .value-description.is-active {
+            display: block;
+            max-height: 200px;
+            opacity: 1;
+        }
+        .team-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .dot-pulse {
+            position: relative;
+            left: -9999px;
+            width: 10px;
+            height: 10px;
+            border-radius: 5px;
+            background-color: #E53E3E;
+            color: #E53E3E;
+            box-shadow: 9999px 0 0 -5px #E53E3E;
+            animation: dot-pulse 1.5s infinite linear;
+            animation-delay: 0.25s;
+        }
+        .dot-pulse::before, .dot-pulse::after {
+            content: '';
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 5px;
+            background-color: #E53E3E;
+            color: #E53E3E;
+        }
+        .dot-pulse::before {
+            box-shadow: 9984px 0 0 -5px #E53E3E;
+            animation: dot-pulse-before 1.5s infinite linear;
+            animation-delay: 0s;
+        }
+        .dot-pulse::after {
+            box-shadow: 10014px 0 0 -5px #E53E3E;
+            animation: dot-pulse-after 1.5s infinite linear;
+            animation-delay: 0.5s;
+        }
+        @keyframes dot-pulse-before {
+            0% {
+                box-shadow: 9984px 0 0 -5px #E53E3E;
+            }
+            30% {
+                box-shadow: 9984px 0 0 2px #E53E3E;
+            }
+            60%, 100% {
+                box-shadow: 9984px 0 0 -5px #E53E3E;
+            }
+        }
+        @keyframes dot-pulse {
+            0% {
+                box-shadow: 9999px 0 0 -5px #E53E3E;
+            }
+            30% {
+                box-shadow: 9999px 0 0 2px #E53E3E;
+            }
+            60%, 100% {
+                box-shadow: 9999px 0 0 -5px #E53E3E;
+            }
+        }
+        @keyframes dot-pulse-after {
+            0% {
+                box-shadow: 10014px 0 0 -5px #E53E3E;
+            }
+            30% {
+                box-shadow: 10014px 0 0 2px #E53E3E;
+            }
+            60%, 100% {
+                box-shadow: 10014px 0 0 -5px #E53E3E;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-black tracking-tighter">REVOLUTI<span class="accent-red">ON</span></div>
+            <div class="hidden md:flex space-x-8 font-bold">
+                <a href="#movimento" class="nav-link">O Movimento</a>
+                <a href="#valores" class="nav-link">Valores</a>
+                <a href="#equipa" class="nav-link">A Equipa</a>
+                <a href="#ideias" class="nav-link">Ideias</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-800 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#movimento" class="block px-6 py-2 text-sm font-bold nav-link">O Movimento</a>
+            <a href="#valores" class="block px-6 py-2 text-sm font-bold nav-link">Valores</a>
+            <a href="#equipa" class="block px-6 py-2 text-sm font-bold nav-link">A Equipa</a>
+            <a href="#ideias" class="block px-6 py-2 text-sm font-bold nav-link">Ideias</a>
+            <a href="#contacto" class="block px-6 py-2 text-sm font-bold nav-link">Contacto</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-bg text-center py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-4">Ligar a Cultura na Brava.</h1>
+                <p class="max-w-3xl mx-auto text-lg md:text-xl text-gray-300">Um movimento cultural para unir, promover e fortalecer os artistas da nossa ilha, criando um espaço onde a criatividade não tem limites.</p>
+            </div>
+        </section>
+
+        <section id="movimento" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">O Nosso Movimento</h2>
+                    <p class="text-lg text-gray-600 mt-2">Nascido na Ilha da Brava para celebrar a nossa identidade.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-bold mb-4">Apresentação</h3>
+                        <p class="text-gray-700 leading-relaxed">O 'Revolution' é um movimento cultural emergente, com o objetivo de unir artistas de diferentes áreas – música, pintura, teatro, dança, entre outras – para promover a riqueza cultural da nossa ilha. A nossa visão é "ligar" a cultura na Brava, dando visibilidade aos nossos talentos e criando um espaço onde a criatividade floresce.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-accent-red">
+                        <h3 class="text-2xl font-bold mb-4">Missão</h3>
+                        <p class="text-gray-700 leading-relaxed">Criar uma plataforma inclusiva que conecta, promove e fortalece artistas na nossa ilha através da organização de eventos culturais e criativos, contribuindo assim para o crescimento e preservação da nossa identidade cultural única.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="valores" class="py-16 md:py-24 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">Os Nossos Valores</h2>
+                    <p class="text-lg text-gray-600 mt-2">Os pilares que guiam o nosso movimento. Clique para saber mais.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    
+                    <div class="value-container">
+                        <div class="value-card bg-white p-6 rounded-lg shadow-md border-2 border-transparent" data-value="inclusao">
+                            <div class="flex items-center space-x-4">
+                                <span class="text-3xl">🤝</span>
+                                <h3 class="text-xl font-bold">Inclusão</h3>
+                            </div>
+                        </div>
+                        <div class="value-description mt-4 p-4 bg-white rounded-lg shadow-inner" id="desc-inclusao">
+                            <p class="text-gray-700">Acreditamos que todos são bem-vindos, sem qualquer forma de discriminação, racismo ou preconceito.</p>
+                        </div>
+                    </div>
+
+                    <div class="value-container">
+                        <div class="value-card bg-white p-6 rounded-lg shadow-md border-2 border-transparent" data-value="criatividade">
+                             <div class="flex items-center space-x-4">
+                                <span class="text-3xl">🎨</span>
+                                <h3 class="text-xl font-bold">Criatividade</h3>
+                            </div>
+                        </div>
+                        <div class="value-description mt-4 p-4 bg-white rounded-lg shadow-inner" id="desc-criatividade">
+                            <p class="text-gray-700">Incentivamos a imaginação e apoiamos novas formas de expressão artística. Todos têm voz e espaço para criar e se orgulhar da sua arte de forma livre e sem receio.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="value-container">
+                        <div class="value-card bg-white p-6 rounded-lg shadow-md border-2 border-transparent" data-value="colaboracao">
+                             <div class="flex items-center space-x-4">
+                                <span class="text-3xl">🔗</span>
+                                <h3 class="text-xl font-bold">Colaboração</h3>
+                            </div>
+                        </div>
+                         <div class="value-description mt-4 p-4 bg-white rounded-lg shadow-inner" id="desc-colaboracao">
+                            <p class="text-gray-700">Trabalhamos juntos para ajudar a comunidade bravense em diversos setores, promovendo a união e o apoio mútuo.</p>
+                        </div>
+                    </div>
+
+                    <div class="value-container">
+                        <div class="value-card bg-white p-6 rounded-lg shadow-md border-2 border-transparent" data-value="raizes">
+                             <div class="flex items-center space-x-4">
+                                <span class="text-3xl">🌳</span>
+                                <h3 class="text-xl font-bold">Raízes</h3>
+                            </div>
+                        </div>
+                        <div class="value-description mt-4 p-4 bg-white rounded-lg shadow-inner" id="desc-raizes">
+                             <p class="text-gray-700">Valorizamos e promovemos as nossas tradições e herança cultural, servindo como uma ponte para conectar as raízes com a nova geração de artistas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="equipa" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">A Equipa Fundadora</h2>
+                    <p class="text-lg text-gray-600 mt-2">As mentes por trás do movimento.</p>
+                </div>
+                <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="team-card bg-white p-8 rounded-lg shadow-lg">
+                        <div class="w-24 h-24 rounded-full mx-auto mb-4 bg-gray-200 flex items-center justify-center font-bold text-3xl text-gray-500">HD</div>
+                        <h3 class="text-xl font-bold">Helder Tavares</h3>
+                        <p class="text-gray-500 mb-2">(vulgo HD)</p>
+                        <p class="font-semibold accent-red">Liderança & Comunicação</p>
+                    </div>
+                    <div class="team-card bg-white p-8 rounded-lg shadow-lg">
+                        <div class="w-24 h-24 rounded-full mx-auto mb-4 bg-gray-200 flex items-center justify-center font-bold text-3xl text-gray-500">Supa</div>
+                        <h3 class="text-xl font-bold">Ruben Freire</h3>
+                        <p class="text-gray-500 mb-2">(vulgo Supa)</p>
+                        <p class="font-semibold accent-red">Música & Multimídia</p>
+                    </div>
+                    <div class="team-card bg-white p-8 rounded-lg shadow-lg">
+                        <div class="w-24 h-24 rounded-full mx-auto mb-4 bg-gray-200 flex items-center justify-center font-bold text-3xl text-gray-500">EG</div>
+                        <h3 class="text-xl font-bold">Emerson Gonçalves</h3>
+                        <p class="text-gray-500 mb-2">(vulgo EG)</p>
+                        <p class="font-semibold accent-red">Produção Audiovisual & Fotografia</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ideias" class="py-16 md:py-24 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">Gerador de Ideias de Eventos ✨</h2>
+                    <p class="text-lg text-gray-600 mt-2">Diga-nos o tema ou o tipo de arte e obtenha inspiração para o seu próximo evento cultural.</p>
+                </div>
+                <div class="max-w-xl mx-auto p-8 bg-white rounded-lg shadow-lg">
+                    <label for="event-prompt" class="block text-lg font-semibold mb-2">Tema ou Tipo de Arte:</label>
+                    <input type="text" id="event-prompt" placeholder="Ex: poesia, dança tradicional, culinária..." class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:border-accent-red transition-colors">
+                    <button onclick="generateEventIdea()" class="w-full mt-6 bg-accent-red text-white py-3 px-6 rounded-lg font-bold hover:bg-red-600 transition-colors">
+                        Gerar Ideias
+                    </button>
+                    <div id="loading-spinner" class="mt-6 flex justify-center hidden">
+                        <div class="dot-pulse"></div>
+                    </div>
+                    <div id="event-output" class="mt-8 p-4 bg-gray-100 rounded-lg text-gray-800 leading-relaxed min-h-[100px]">
+                        As suas ideias de evento aparecerão aqui!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="contacto" class="hero-bg py-12">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-2xl font-bold mb-4">Junta-te à <span class="accent-red">Revolution</span>!</h3>
+            <p class="text-gray-300 mb-6">Estamos a começar. Segue-nos nas redes sociais para ficares a par de todas as novidades e eventos.</p>
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="text-gray-300 hover:text-red-500 transition-colors">
+                    <span class="text-3xl font-bold">f</span>
+                </a>
+                <a href="#" class="text-gray-300 hover:text-red-500 transition-colors">
+                     <span class="text-3xl font-bold">t</span>
+                </a>
+                 <a href="#" class="text-gray-300 hover:text-red-500 transition-colors">
+                    <span class="text-3xl font-bold">i</span>
+                 </a>
+            </div>
+            <p class="text-sm text-gray-400 mt-8">&copy; 2025 Movimento Cultural "Revolution". Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=';
+        const apiKey = "";
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const navLinks = document.querySelectorAll('a[href^="#"]');
+            navLinks.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                    if (!mobileMenu.classList.contains('hidden')) {
+                         mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+
+            const valueCards = document.querySelectorAll('.value-card');
+            valueCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const value = card.dataset.value;
+                    const description = document.getElementById(`desc-${value}`);
+                    
+                    const isActive = card.classList.contains('is-active');
+
+                    document.querySelectorAll('.value-card.is-active').forEach(c => c.classList.remove('is-active'));
+                    document.querySelectorAll('.value-description.is-active').forEach(d => d.classList.remove('is-active'));
+
+                    if (!isActive) {
+                        card.classList.add('is-active');
+                        description.classList.add('is-active');
+                    }
+                });
+            });
+        });
+
+        async function generateEventIdea() {
+            const promptInput = document.getElementById('event-prompt');
+            const outputDiv = document.getElementById('event-output');
+            const loadingSpinner = document.getElementById('loading-spinner');
+
+            const userPrompt = promptInput.value;
+            if (!userPrompt) {
+                outputDiv.textContent = 'Por favor, insira um tema ou tipo de arte.';
+                return;
+            }
+
+            outputDiv.textContent = '';
+            loadingSpinner.classList.remove('hidden');
+
+            const systemPrompt = "Aja como um curador de eventos culturais criativos para o movimento 'Revolution'. Forneça 3 ideias de eventos únicas, formatadas como uma lista numerada. Para cada ideia, inclua um título, uma descrição breve e uma sugestão de público-alvo.";
+
+            const payload = {
+                contents: [{ parts: [{ text: userPrompt }] }],
+                tools: [{ "google_search": {} }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                }
+            };
+
+            let retries = 0;
+            const maxRetries = 3;
+            const baseDelay = 1000;
+
+            const makeApiCall = async () => {
+                const response = await fetch(API_URL + apiKey, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    if (response.status === 429 && retries < maxRetries) {
+                        retries++;
+                        const delay = baseDelay * Math.pow(2, retries);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        return makeApiCall();
+                    }
+                    throw new Error(`Erro na API: ${response.statusText}`);
+                }
+
+                return response.json();
+            };
+
+            try {
+                const result = await makeApiCall();
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (text) {
+                    outputDiv.textContent = text;
+                } else {
+                    outputDiv.textContent = 'Não foi possível gerar ideias. Por favor, tente novamente com um tema diferente.';
+                }
+            } catch (error) {
+                outputDiv.textContent = `Erro: ${error.message}`;
+            } finally {
+                loadingSpinner.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
